@@ -10,18 +10,12 @@ import java.util.List;
 
 public class xlsWorker {
 
-    public static void main(String[] args) {
+    public void converter(String xlsFolder, String ResultFolder ) {
         try {
-            // Path to folder with Excel files
-            String excelFolder = "src/Data/xlsx";
-
-            // Path to folder where JSON files will be saved
-            String jsonFolder = "src/Data/json";
-
             // Create a Gson object to serialize to JSON
             Gson gson = new GsonBuilder ().setPrettyPrinting ().create ();
 
-            File excelDir = new File (excelFolder);
+            File excelDir = new File (xlsFolder);
             File[] excelFiles = excelDir.listFiles ((dir, name) -> name.endsWith (".xlsx"));
 
             if (excelFiles != null) {
@@ -49,7 +43,7 @@ public class xlsWorker {
                     Cell cellB8 = sheet.getRow (7).getCell (1); // B8
                     Cell cellB9 = sheet.getRow (8).getCell (1); // B9
 
-                    // Assigning to variables the string value of their excel cells.
+                    // Assigning to variables the string value of their Excel cells.
                     // We get the data using our getCellValueAsString(x) function, defined below...
 
                     String cell1Value = getCellValueAsString (cellB1);
@@ -67,7 +61,7 @@ public class xlsWorker {
                             cell5Value, cell6Value, cell7Value, cell8Value, cell9Value));
 
                     // Create a JSON file and write data to it
-                    String jsonFileName = jsonFolder + File.separator + excelFile.getName ().replace (".xlsx", ".json");
+                    String jsonFileName = ResultFolder + File.separator + excelFile.getName ().replace (".xlsx", ".json");
                     try (Writer writer = new FileWriter (jsonFileName)) {
                         // inserting and writing to JSON data from excelDataList
                         gson.toJson (excelDataList, writer);
@@ -79,7 +73,9 @@ public class xlsWorker {
                 }
             } else {
                 // if the folder is empty
-                System.out.println ("В указанной папке нет файлов .xlsx");
+                System.out.println ("In selected folder don't exist *.xlsx files");
+
+                // stop program? or may be got new correct path?
             }
         } catch (Exception e) {
             // throw exceptions
@@ -94,40 +90,10 @@ public class xlsWorker {
             return "";
         }
         // Getting data depending on the type of data. All data transform in String format
-        switch (cell.getCellType ()) {
-            case STRING:
-                return cell.getStringCellValue ();
-            case NUMERIC:
-                return String.valueOf (cell.getNumericCellValue ());
-            default:
-                return "";
-        }
-    }
-}
-
-// class with structure of ExcelData (Structure of Excel file for parsing)
-class ExcelData {
-    private String Denumire;
-    private String CodFiscal;
-    private String ReportDate;
-    private String ActiveImobilizate;
-    private String ActiveCirculante;
-    private String CapitalPropriu;
-    private String DTL;
-    private final String DTS;
-    private String Provizioane;
-
-    public ExcelData (String Denumire, String CodFiscal, String ReportDate,
-                      String ActiveImobilizate, String ActiveCirculante, String CapitalPropriu,
-                      String DTL, String DTS, String Provizioane) {
-        this.Denumire = Denumire;
-        this.CodFiscal = CodFiscal;
-        this.ReportDate = ReportDate;
-        this.ActiveImobilizate = ActiveImobilizate;
-        this.ActiveCirculante = ActiveCirculante;
-        this.CapitalPropriu = CapitalPropriu;
-        this.DTL = DTL;
-        this.DTS = DTS;
-        this.Provizioane = Provizioane;
+        return switch (cell.getCellType ()) {
+            case STRING -> cell.getStringCellValue ();
+            case NUMERIC -> String.valueOf (cell.getNumericCellValue ());
+            default -> "";
+        };
     }
 }
