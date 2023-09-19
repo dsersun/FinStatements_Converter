@@ -1,35 +1,33 @@
 package org.FinData;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Main {
-
     public static void main (String[] args) {
-        // get path to folder with Excel files
-        Main path = new Main ();
-        String excelFolder = path.GetXlsPath ();
+        int intervalInSeconds = 30; // Интервал в секундах
 
-        // Path to folder where JSON files will be saved
-        String jsonFolder = "src/Data/json";
+        Timer timer = new Timer ();
+        timer.scheduleAtFixedRate (new TimerTask () {
+            public void run () {
+                String excelFolder = "src/Data/xlsx";
+                String jsonFolder = "src/Data/json";
 
-        // convert data from .xlsx to JSON.
-        xlsWorker worker = new xlsWorker();
-        worker.converter (excelFolder, jsonFolder);
-        System.out.println ("Fisierele Ecxel au fost procesate");
+                xlsConverter worker = new xlsConverter ();
+                worker.converter (excelFolder, jsonFolder);
+                System.out.println ("Fisierele Ecxel au fost procesate");
+            }
+        }, 0, intervalInSeconds * 1000); // Переводим интервал в миллисекунды
 
-        // processing Json File
-        // JsonWorker JsonObject = new JsonWorker ();
-        // JsonObject.jsonProcessor (jsonFolder);
-        // System.out.println ("Datele din JSON fisiere au fost salvate in basa de date");
+        // Дайте циклу выполниться определенное время, например, 5 минут (300 секунд)
+        try {
+            Thread.sleep (300000); // Подождать 5 минут перед завершением программы
+        } catch (InterruptedException e) {
+            e.printStackTrace ();
+        }
 
-        // Send notification
-        // to be developed
-    }
-
-
-    public String GetXlsPath() {
-        // aici de a dezvolta functionalul de a introduce in terminal localizarea mapei cu fisiere excel
-
-        // pina cind default path setat fortat
-        String xlsPath = "src/Data/xlsx";
-        return xlsPath;
+        // Остановить таймер после заданного времени
+        timer.cancel ();
+        System.out.println ("Цикл завершен.");
     }
 }
