@@ -5,29 +5,25 @@ import java.util.TimerTask;
 
 public class Main {
     public static void main (String[] args) {
-        int intervalInSeconds = 30; // Интервал в секундах
-
+        int intervalInSeconds = 30;
         Timer timer = new Timer ();
         timer.scheduleAtFixedRate (new TimerTask () {
             public void run () {
                 String excelFolder = "src/Data/xlsx";
-                String jsonFolder = "src/Data/json";
-
-                xlsConverter worker = new xlsConverter ();
-                worker.converter (excelFolder, jsonFolder);
-                System.out.println ("Fisierele Ecxel au fost procesate");
+                String ResultFolder = "src/Data/json";
+                Converter saver = new Converter ();
+                saver.converter (excelFolder, ResultFolder);
+                System.out.println ("----------- Executed ------------\n");
             }
-        }, 0, intervalInSeconds * 1000); // Переводим интервал в миллисекунды
+        }, 0, intervalInSeconds * 1000);
 
-        // Дайте циклу выполниться определенное время, например, 5 минут (300 секунд)
         try {
-            Thread.sleep (300000); // Подождать 5 минут перед завершением программы
+            Thread.sleep (300000); // Application will be stopped after 5 min.
         } catch (InterruptedException e) {
             e.printStackTrace ();
         }
 
-        // Остановить таймер после заданного времени
         timer.cancel ();
-        System.out.println ("Цикл завершен.");
+        System.out.println ("Job is done. Try Again!");
     }
 }
