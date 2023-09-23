@@ -12,3 +12,20 @@ The structure of the database for functional testing does not provide for the sa
 In the production version, these fields will be expanded.
 It is also planned to automatically calculate certain indicators from the balance sheet data.
 
+### Table for financial statements, MySQL!
+```mysql-sql
+CREATE TABLE `finstatements` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `present_time` datetime NOT NULL,
+  `denumire` varchar(80) NOT NULL,
+  `cod_fiscal` varchar(13) NOT NULL,
+  `report_date` varchar(20) NOT NULL,
+  `active_imobilizate` double DEFAULT '0',
+  `active_circulante` double DEFAULT '0',
+  `capital_propriu` double DEFAULT '0',
+  `DTL` double DEFAULT '0',
+  `DTS` double DEFAULT '0',
+  `provizioane` double DEFAULT '0',
+  PRIMARY KEY (`id`)
+```
+
