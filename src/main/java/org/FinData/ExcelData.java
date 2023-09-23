@@ -2,15 +2,15 @@ package org.FinData;
 
 // class with structure of ExcelData (Structure of Excel file for parsing)
 class ExcelData {
-    private String Denumire;
-    private String CodFiscal;
-    private String ReportDate;
-    private String ActiveImobilizate;
-    private String ActiveCirculante;
-    private String CapitalPropriu;
-    private String DTL;
+    private final String Denumire;
+    private final String CodFiscal;
+    private final String ReportDate;
+    private final String ActiveImobilizate;
+    private final String ActiveCirculante;
+    private final String CapitalPropriu;
+    private final String DTL;
     private final String DTS;
-    private String Provizioane;
+    private final String Provizioane;
 
     public ExcelData (String Denumire, String CodFiscal, String ReportDate,
                       String ActiveImobilizate, String ActiveCirculante, String CapitalPropriu,
