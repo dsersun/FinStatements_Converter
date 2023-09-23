@@ -2,11 +2,12 @@ package org.FinData;
 
 import java.sql.*;
 
+@SuppressWarnings("CallToDriverManagerGetConnection")
 public class DB_Connector {
-
-    private static final String url ="jdbc:mysql://localhost:3306/finstatements";
-    private static final String user = "java_app";
-    private static final String password = "G>*>(hG@aaV6ds59@Txn";
+    // url, username and password are in private Resource class
+    private static final String url = new Resource ().getUrl ();
+    private static final String user = new Resource ().getUser ();
+    private static final String password = new Resource ().getPwd ();
 
     public static Connection getConnection(){
         try{

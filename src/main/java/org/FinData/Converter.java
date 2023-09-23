@@ -43,6 +43,7 @@ public class Converter {
             File excelDir = new File (xlsFolder);
             File[] excelFiles = excelDir.listFiles ((dir, name) -> name.endsWith (".xlsx"));
 
+            assert excelFiles != null;
             for (File excelFile : excelFiles) {
                 FileInputStream excelStream = new FileInputStream (excelFile);
                 Workbook workbook = new XSSFWorkbook (excelStream);
